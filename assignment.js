@@ -24,6 +24,7 @@ var alphabet = Object.keys(mapping);
  */
 function letterToIndex(letter) {
   // TODO: Complete this function
+  return mapping[letter];
 }
 
 /*
@@ -38,6 +39,7 @@ function letterToIndex(letter) {
  */
 function indexToLetter(index) {
   // TODO: Complete this function
+  return alphabet[index % 26];
 }
 
 /*
@@ -52,6 +54,7 @@ function indexToLetter(index) {
  */
 function shiftLetter(original, shift) {
   // TODO: Complete this function.
+  return indexToLetter(letterToIndex(original) + shift);
 }
 
 
@@ -68,6 +71,11 @@ function shiftLetter(original, shift) {
 
 function encryptCaesar(original, shift) {
   // TODO: Complete this function.
+  let encrypted = [];
+  for(let i = 0; i < original.length; i++) {
+    encrypted.push(shiftLetter(original[i], shift));
+  }
+  return encrypted.join("");
 }
 
 
@@ -85,6 +93,7 @@ function encryptCaesar(original, shift) {
 
 function checkCaesarWithShift(encrypted, shift, guess) {
   // TODO: Complete this function.
+  return encryptCaesar(guess, shift) === encrypted;
 }
 
 
@@ -102,11 +111,19 @@ function checkCaesarWithShift(encrypted, shift, guess) {
 
 function checkCaesar(encrypted, guess) {
   // TODO: Complete this function.
+  for(let i = 0; i < 26; i++) {
+    if (checkCaesarWithShift(encrypted, i, guess)) {
+      return true;
+    }
+  }
+  return false;
 }
 
+// Bonus: right now, our functions only support strings with entirely lowercase letters.
+// How could we extend our code to support all strings?
 
 /*
- * *** EXTENSION ***
+ * *** BIGGER EXTENSION ***
  * ----
  * Encrypts the given string using the Vigenere cipher and the given keyword.
  * ----
