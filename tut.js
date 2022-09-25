@@ -28,6 +28,20 @@ function product(array) {
 // Calling functions is simple
 addOne(5);
 
+// You can compose calls to functions
+addOne(product([1,2,3,4,5]));
+
+// Returning in a function ends it early.
+function product(array) {
+  var total = 0;
+  for (var e in array) {
+    return e; // This function will return the first value of array
+  }
+
+  // This won't run (because of the return above)
+  return total;
+}
+
 // Objects are like Python dictionaries
 var object = {
   "theKey": 1,
@@ -65,6 +79,7 @@ myArray[3] = "Hello";
 // Join all elements of an array with semicolon
 var myArray0 = [32, false, "js", 12, 56,90];
 myArray0.join(";") // => "32;false;js;12;56;90"
+myArray0.join("") // => "32falsejs125690"
 
 // Get subarray of elements from index 1 (include) to 4 (exclude)
 myArray0.slice(1,4); // => [false,"js",12]
