@@ -18,9 +18,9 @@ function addOne(x) {
 }
 
 function product(array) {
-  var total = 0;
+  var total = 1;
   for (var e in array) {
-    total *= array;
+    total *= array[e];
   }
   return total;
 }
