@@ -23,7 +23,7 @@ var alphabet = Object.keys(mapping);
  * > the index
  */
 function letterToIndex(letter) {
-  // TODO: Complete this function
+  return mapping[letter];
 }
 
 /*
@@ -37,7 +37,7 @@ function letterToIndex(letter) {
  * > the letter
  */
 function indexToLetter(index) {
-  // TODO: Complete this function
+  return alphabet[index % 26];
 }
 
 /*
@@ -51,7 +51,8 @@ function indexToLetter(index) {
  * > char - shifted letter
  */
 function shiftLetter(original, shift) {
-  // TODO: Complete this function.
+  var ind = letterToIndex(original) + shift;
+  return indexToLetter(ind);
 }
 
 
@@ -67,7 +68,11 @@ function shiftLetter(original, shift) {
  */
 
 function encryptCaesar(original, shift) {
-  // TODO: Complete this function.
+  var enc = '';
+  for (var i in original) {
+    enc += shiftLetter(original[i], shift);
+  }
+  return enc;
 }
 
 
@@ -84,7 +89,7 @@ function encryptCaesar(original, shift) {
  */
 
 function checkCaesarWithShift(encrypted, shift, guess) {
-  // TODO: Complete this function.
+  return encryptCaesar(guess, shift) == encrypted;
 }
 
 
@@ -101,7 +106,12 @@ function checkCaesarWithShift(encrypted, shift, guess) {
  */
 
 function checkCaesar(encrypted, guess) {
-  // TODO: Complete this function.
+  for (var i = 1; i < 26; i++) {
+    if(checkCaesarWithShift(guess, i) == encrypted) {
+      return true;
+    }
+  }
+  return false;
 }
 
 
@@ -119,5 +129,28 @@ function checkCaesar(encrypted, guess) {
  */
 
 function encryptVigenere(original, keyword) {
-  // TODO: Complete this function.
+  // ^ https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher
+
+  // * Creating auxiliary string w/ length of orginal
+  // * using keyword
+  var aux = '';
+  var l = original.length;
+  var m = keyword.length;
+  if (l <= m) {
+    aux = keyword.slice(0, l);
+  }
+  else {
+    var prod = Math.floor(l / m);
+    var rem = l % m;
+    for (var i = 0; i<prod; i++) aux += keyword;
+    aux += keyword.slice(0, rem);
+  }
+  
+  // * algebraic formula
+  var final = '';
+  for (var i = 0; i < l; i++){
+    var ind = letterToIndex(original[i]) + letterToIndex(aux[i]);
+    final += indexToLetter(ind);
+  }
+  return final;
 }
